@@ -14,32 +14,32 @@
 <rule: DAY>           [-\d]+
 <rule: TIME>          [:\d]+
 
-<rule: TOPIC>         <.STATUS> ( ( <NICK><SOURCE> changed topic of <CHANNEL> to: <CONTENT> ) |
-                                  ( Topic set by <NICK><SOURCE> \[ <CONTENT> \]) |
+<rule: TOPIC>         <.STATUS> ( ( <FROM><SOURCE> changed topic of <CHANNEL> to: <CONTENT> ) |
+                                  ( Topic set by <FROM><SOURCE> \[ <CONTENT> \]) |
                                   ( Topic for <CHANNEL>: <CONTENT> ) )
-<rule: JOIN>          <.STATUS> ( ( <NICK><SOURCE> has joined <CHANNEL> ) |
-                                  ( <NAME>@<HOST> has joined the channel with the alias '<NICK>' ) |
+<rule: JOIN>          <.STATUS> ( ( <FROM><SOURCE> has joined <CHANNEL> ) |
+                                  ( <NAME>@<HOST> has joined the channel with the alias '<FROM>' ) |
                                   ( Connected to server ) )
-<rule: KICK>          <.STATUS> ( ( <[NICK]> has been kicked by <[NICK]><SOURCE> \[ <CONTENT> \] ) |
-                                  ( \*<[NICK]>\* kicked <[NICK]> ) )
-<rule: MODE>          <.STATUS> mode/<CHANNEL> \[ <[FLAG]>+ <[NICK]>? (\s<[NICK]>)* \] by <[NICK]>?
-<rule: QUIT>          <.STATUS> ( ( <NICK><SOURCE> has (?: quit | left ) <CHANNEL>? ( \[ <CONTENT> \] )? ) |
-                                  ( <NICK> has left the room \(<NAME>@<HOST>\) ) |
+<rule: KICK>          <.STATUS> ( ( <TO> has been kicked by <FROM><SOURCE> \[ <CONTENT> \] ) |
+                                  ( \*<FROM>\* kicked <TO> ) )
+<rule: MODE>          <.STATUS> mode/<CHANNEL> \[ <CONTENT> \] by <FROM>?
+<rule: QUIT>          <.STATUS> ( ( <FROM><SOURCE> has (?: quit | left ) <CHANNEL>? ( \[ <CONTENT> \] )? ) |
+                                  ( <FROM> has left the room \(<NAME>@<HOST>\) ) |
                                   ( Disconnected from server ) )
-<rule: AKA>           <.STATUS> '?<[NICK]>'? is now known as '?<[NICK]>'?
-<rule: INVITE>        <.STATUS> <[NICK]> invited <[NICK]>(@<HOST>)*
+<rule: AKA>           <.STATUS> '?<FROM>'? is now known as '?<TO>'?
+<rule: INVITE>        <.STATUS> <FROM> invited <TO>(@<HOST>)*
 
 <rule: STATUS>        ( -!- | ( [><] subetha[`\w]*<SOURCE>: [\*\.><]* ) )
 
-<rule: EMOTE>         [><] ( ( subetha[`\w]*<SOURCE>: \* \*<NICK>\* <CONTENT> )  | ( \* <NICK><SOURCE>  <CONTENT> ) )
-<rule: DIALOG>        [><] ( ( subetha[`\w]*<SOURCE>:    \<<NICK>\> <CONTENT> )  | (    <NICK><SOURCE>: <CONTENT> ) )
+<rule: EMOTE>         [><] ( ( subetha[`\w]*<SOURCE>: \* \*<FROM>\* <CONTENT> )  | ( \* <FROM><SOURCE>  <CONTENT> ) )
+<rule: DIALOG>        [><] ( ( subetha[`\w]*<SOURCE>:    \<<FROM>\> <CONTENT> )  | (    <FROM><SOURCE>: <CONTENT> ) )
 
 <rule: CONTENT>       .+
-<rule: NICK>          [\w][-`\{\}\[\]\|\.\w]*
+<rule: FROM>          [-`\{\}\[\]\|\.\w]+
+<rule: TO>            [-`\{\}\[\]\|\.\w]+
 <rule: CHANNEL>       \#[-\w]+
-<rule: FLAG>          ( [\-\+][\w]* )
 
 <rule: SOURCE>        ( ![~]?<NAME>@<HOST> )?
-<rule: NAME>          [\w][-`\{\}\[\]\|\.\w]*
+<rule: NAME>          [-`\{\}\[\]\|\.\w]+
 <rule: HOST>          [-:\/\.\w]+
 
