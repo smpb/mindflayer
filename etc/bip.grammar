@@ -1,0 +1,44 @@
+#
+# Regexp::Grammars definition for Bip - bip.milkypond.org - IRC logs
+#
+
+#<logfile: parser_log>
+#<debug: match>
+
+<nocontext:>
+
+<DATE> ( <STATUS> | <EMOTE> | <DIALOG> )
+
+<rule: DATE>          <DAY> <TIME>
+<rule: DAY>           [-\d]+
+<rule: TIME>          [:\d]+
+
+<rule: STATUS>        ( -!- | ( [><] subetha[`\w]*<SOURCE>: [\*\.><]* ) )
+                      ( <TOPIC> | <JOIN> | <KICK> | <MODE> | <QUIT> | <AKA> | <INVITE> )
+<rule: TOPIC>         ( <NICK><SOURCE> changed topic of <CHANNEL> to: <CONTENT> ) |
+                      ( Topic set by <NICK><SOURCE> \[ <CONTENT> \]) |
+                      ( Topic for <CHANNEL>: <CONTENT> )
+<rule: JOIN>          ( <NICK><SOURCE> has joined <CHANNEL> ) |
+                      ( <NAME>@<HOST> has joined the channel with the alias '<NICK>' ) |
+                      ( Connected to server )
+<rule: KICK>          ( <[NICK]> has been kicked by <[NICK]><SOURCE> \[ <CONTENT> \] ) |
+                      ( \*<[NICK]>\* kicked <[NICK]> )
+<rule: MODE>          mode/<CHANNEL> \[ <[FLAG]>+ <[NICK]>? (\s<[NICK]>)* \] by <[NICK]>?
+<rule: QUIT>          ( <NICK><SOURCE> has (?: quit | left ) <CHANNEL>? ( \[ <CONTENT> \] )? ) |
+                      ( <NICK> has left the room \(<NAME>@<HOST>\) ) |
+                      ( Disconnected from server )
+<rule: AKA>           ( '?<[NICK]>'? is now known as '?<[NICK]>'? )
+<rule: INVITE>        <[NICK]> invited <[NICK]>(@<HOST>)*
+
+<rule: EMOTE>         [><] ( ( subetha[`\w]*<SOURCE>: \* \*<NICK>\* <CONTENT> )  | ( \* <NICK><SOURCE> <CONTENT> ) )
+<rule: DIALOG>        [><] ( ( subetha[`\w]*<SOURCE>: \<<NICK>\> <CONTENT> )     | ( <NICK><SOURCE>: <CONTENT> ) )
+
+<rule: CONTENT>       .+
+<rule: NICK>          [\w][-`\{\}\[\]\|\.\w]*
+<rule: CHANNEL>       \#[-\w]+
+<rule: FLAG>          ( [\-\+][\w]* )
+
+<rule: SOURCE>        ( ![~]?<NAME>@<HOST> )?
+<rule: NAME>          [\w][-`\{\}\[\]\|\.\w]*
+<rule: HOST>          [-:\/\.\w]+
+
