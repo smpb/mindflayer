@@ -1,0 +1,8 @@
+Build.PL
+etc/bip.grammar
+MANIFEST			This list of files
+README.md
+schema/messages.sql
+script/mindflayer.pl
+script/populate.pl
+script/schema.pl
